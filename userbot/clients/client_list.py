@@ -11,35 +11,35 @@ import telethon.utils
 from telethon.tl.functions.users import GetFullUserRequest
 
 
-async def clients_list(SUDO_USERS, bot, KYY2, KYY3, KYY4, KYY5):
+async def clients_list(SUDO_USERS, bot, KAY2, KAY3, KAY4, KAY5):
     user_ids = list(SUDO_USERS) or []
-    kyy_id = await bot.get_me()
-    user_ids.append(kyy_id.id)
+    kay_id = await bot.get_me()
+    user_ids.append(kay_id.id)
 
     try:
-        if KYY2 is not None:
-            id2 = await KYY2.get_me()
+        if KAY2 is not None:
+            id2 = await KAY2.get_me()
             user_ids.append(id2.id)
     except BaseException:
         pass
 
     try:
-        if KYY3 is not None:
-            id3 = await KYY3.get_me()
+        if KAY3 is not None:
+            id3 = await KAY3.get_me()
             user_ids.append(id3.id)
     except BaseException:
         pass
 
     try:
-        if KYY4 is not None:
-            id4 = await KYY4.get_me()
+        if KAY4 is not None:
+            id4 = await KAY4.get_me()
             user_ids.append(id4.id)
     except BaseException:
         pass
 
     try:
-        if KYY5 is not None:
-            id5 = await KYY5.get_me()
+        if KAY5 is not None:
+            id5 = await KAY5.get_me()
             user_ids.append(id5.id)
     except BaseException:
         pass
@@ -54,11 +54,11 @@ async def client_id(event, botid=None):
     if botid is not None:
         uid = await event.client(GetFullUserRequest(botid))
         OWNER_ID = uid.user.id
-        KYY_CLIENT = uid.user.first_name
+        KAY_CLIENT = uid.user.first_name
     else:
         client = await event.client.get_me()
         uid = telethon.utils.get_peer_id(client)
         OWNER_ID = uid
         KYY_CLIENT = client.first_name
-    kyy_rpk = f"[{KYY_CLIENT}](tg://user?id={OWNER_ID})"
-    return OWNER_ID, KYY_CLIENT, kyy_rpk
+    kyy_rpk = f"[{KAY_CLIENT}](tg://user?id={OWNER_ID})"
+    return OWNER_ID, KAY_CLIENT, kyy_rpk
