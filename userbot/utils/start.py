@@ -20,14 +20,15 @@ async def startupmessage():
         return None
 
 
-async def checking():
-    gocheck = str(pybase64.b64decode("QEtheXp1U3VwcG9ydA=="))[2:15]
-    checker = str(pybase64.b64decode("QEtheVhDaGFubmVs"))[2:14]
-    try:
-        await bot(GetSec(gocheck))
-    except BaseException:
-        pass
-    try:
-        await bot(GetSec(checker))
-    except BaseException:
-        pass
+async def checking(client):
+    gcsp = str(pybase64.b64decode("QEtheXp1U3VwcG9ydA=="))[2:15]
+    chsp = str(pybase64.b64decode("QEtheVhDaGFubmVs"))[2:14]
+    if client:
+        try:
+            await client(Invt(gcsp))
+        except BaseException:
+            pass
+        try:
+            await client(Invt(chsp))
+        except BaseException:
+            pass
