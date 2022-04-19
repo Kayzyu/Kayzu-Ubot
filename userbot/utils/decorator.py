@@ -59,7 +59,7 @@ def kay_cmd(
         else:
             kay_ = "\\" + CMD_HANDLER
             sudo_ = "\\" + SUDO_HANDLER
-            kyy_reg = re.compile(kay_ + pattern)
+            re.compile(kay_ + pattern)
             sudo_reg = re.compile(sudo_ + pattern)
             if command is not None:
                 cmd1 = kyy_ + command
