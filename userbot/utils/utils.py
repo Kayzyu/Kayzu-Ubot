@@ -57,7 +57,7 @@ async def autobot():
     if who.username:
         username = who.username + "_ubot"
     else:
-        username = "kyy" + (str(who.id))[5:] + "ubot"
+        username = "kay" + (str(who.id))[5:] + "ubot"
     bf = "@BotFather"
     await bot(UnblockRequest(bf))
     await bot.send_message(bf, "/cancel")
@@ -90,7 +90,7 @@ async def autobot():
     await bot.send_read_acknowledge("botfather")
     if isdone.startswith("Sorry,"):
         ran = randint(1, 100)
-        username = "kyy" + (str(who.id))[6:] + str(ran) + "ubot"
+        username = "kay" + (str(who.id))[6:] + str(ran) + "ubot"
         await bot.send_message(bf, username)
         await asyncio.sleep(1)
         nowdone = (await bot.get_messages(bf, limit=1))[0].text
@@ -119,7 +119,7 @@ async def autobot():
             await bot.send_message(bf, f"@{username}")
             await asyncio.sleep(1)
             await bot.send_message(
-                bf, f"✨ Owner ~ {who.first_name} ✨\n\n✨ Powered By ~ @NastyProject ✨"
+                bf, f"✨ Owner ~ {who.first_name} ✨\n\n✨ Powered By ~ @KayXChannel ✨"
             )
             await bot.send_message(
                 BOTLOG_CHATID,
@@ -174,7 +174,7 @@ async def autobot():
         await bot.send_message(bf, f"@{username}")
         await asyncio.sleep(1)
         await bot.send_message(
-            bf, f"✨ Owner ~ {who.first_name} ✨\n\n✨ Powered By ~ @NastyProject ✨"
+            bf, f"✨ Owner ~ {who.first_name} ✨\n\n✨ Powered By ~ @KayXChannel ✨"
         )
         await bot.send_message(
             BOTLOG_CHATID,
@@ -276,7 +276,7 @@ def remove_plugin(shortname):
 
 async def autopilot():
     LOGS.info("TUNGGU SEBENTAR. SEDANG MEMBUAT GROUP LOG USERBOT UNTUK ANDA")
-    desc = "ᴍʏ ҡʏʏ ʟᴏɢs ɢʀᴏᴜᴘ\n\n Join @NastyProject"
+    desc = "ᴍʏ ҡᴧʏ ʟᴏɢs ɢʀᴏᴜᴘ\n\n Join @KayXChannel"
     try:
         grup = await bot(
             CreateChannelRequest(title="ҡʏʏ ʟᴏɢs", about=desc, megagroup=True)
@@ -313,7 +313,7 @@ def install_req(cmd: str) -> Tuple[str, str, int, int]:
 
 def git():
     UPSTREAM_REPO = b64decode(
-        "aHR0cHM6Ly9naXRodWIuY29tL211aGFtbWFkcml6a3kxNi9LeXktVXNlcmJvdA=="
+        "aHR0cHM6Ly9naXRodWIuY29tL0theXp5dS9LYXl6dS1VYm90"
     ).decode("utf-8")
     try:
         repo = Repo()
@@ -344,4 +344,4 @@ def git():
         except GitCommandError:
             repo.git.reset("--hard", "FETCH_HEAD")
         install_req("pip3 install --no-cache-dir -r requirements.txt")
-        LOGS.info("Fetched Updates from Kyy-Userbot")
+        LOGS.info("Fetched Updates from Kayzu-Ubot")
