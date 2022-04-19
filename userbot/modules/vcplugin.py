@@ -35,6 +35,7 @@ from userbot.utils.queues.queues import (
     get_queue,
     pop_an_item,
 )
+from userbot.events import register
 from userbot.utils.thumbnail import gen_thumb
 
 
@@ -480,6 +481,7 @@ async def vc_playlist(event):
 # ambil boleh apus credits jangan ya ka:)
 
 @kay_cmd(pattern="joinvc(?: |$)(.*)")
+@register(pattern=r"^\.joinvcs(?: |$)(.*)", sudo=True)
 async def join_(event):
     xnxx = await edit_or_reply(event, f"**Processing**")
     if len(event.text.split()) > 1:
@@ -507,6 +509,7 @@ async def join_(event):
 
 
 @kay_cmd(pattern="leavevc(?: |$)(.*)")
+@register(pattern=r"^\.leavevcs(?: |$)(.*)", sudo=True)
 async def leavevc(event):
     """ leave video chat """
     xnxx = await edit_or_reply(event, "Processing")
