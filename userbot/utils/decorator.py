@@ -10,8 +10,13 @@ from pathlib import Path
 from telethon import events
 
 from userbot import (
+    BL_CHAT,
     CMD_HANDLER,
     CMD_LIST,
+    KYY2,
+    KYY3,
+    KYY4,
+    KYY5,
     LOAD_PLUG,
     SUDO_HANDLER,
     SUDO_USERS,
@@ -20,7 +25,7 @@ from userbot import (
 )
 
 
-def kay_cmd(
+def kyy_cmd(
     pattern: str = None,
     allow_sudo: bool = True,
     disable_edited: bool = False,
@@ -37,26 +42,31 @@ def kay_cmd(
     if "disable_edited" in args:
         del args["disable_edited"]
 
+    args["blacklist_chats"] = True
+    black_list_chats = list(BL_CHAT)
+    if len(black_list_chats) > 0:
+        args["chats"] = black_list_chats
+
     if pattern is not None:
-        global kay_reg
+        global kyy_reg
         global sudo_reg
         if (
             pattern.startswith(r"\#")
             or not pattern.startswith(r"\#")
             and pattern.startswith(r"^")
         ):
-            kay_reg = sudo_reg = re.compile(pattern)
+            kyy_reg = sudo_reg = re.compile(pattern)
         else:
-            kay_ = "\\" + CMD_HANDLER
+            kyy_ = "\\" + CMD_HANDLER
             sudo_ = "\\" + SUDO_HANDLER
-            kay_reg = re.compile(kay_ + pattern)
+            kyy_reg = re.compile(kyy_ + pattern)
             sudo_reg = re.compile(sudo_ + pattern)
             if command is not None:
-                cmd1 = kay_ + command
+                cmd1 = kyy_ + command
                 cmd2 = sudo_ + command
             else:
                 cmd1 = (
-                    (kay_ +
+                    (kyy_ +
                      pattern).replace(
                         "$",
                         "").replace(
@@ -76,26 +86,61 @@ def kay_cmd(
                 CMD_LIST.update({file_test: [cmd1]})
 
     def decorator(func):
-        if not disable_edited:
-            bot.add_event_handler(
-                func, events.MessageEdited(
-                    **args, outgoing=True, pattern=kay_reg))
-        bot.add_event_handler(
-            func, events.NewMessage(**args, outgoing=True, pattern=kay_reg)
-        )
-        if allow_sudo:
+        if bot:
             if not disable_edited:
                 bot.add_event_handler(
+                    func, events.MessageEdited(
+                        **args, outgoing=True, pattern=kyy_reg))
+            bot.add_event_handler(
+                func, events.NewMessage(**args, outgoing=True, pattern=kyy_reg)
+            )
+        if bot:
+            if allow_sudo:
+                if not disable_edited:
+                    bot.add_event_handler(
+                        func,
+                        events.MessageEdited(
+                            **args,
+                            from_users=list(SUDO_USERS),
+                            pattern=sudo_reg),
+                    )
+                bot.add_event_handler(
                     func,
-                    events.MessageEdited(
+                    events.NewMessage(
                         **args, from_users=list(SUDO_USERS), pattern=sudo_reg
                     ),
                 )
-            bot.add_event_handler(
-                func,
-                events.NewMessage(
-                    **args, from_users=list(SUDO_USERS), pattern=sudo_reg
-                ),
+        if KYY2:
+            if not disable_edited:
+                KYY2.add_event_handler(
+                    func, events.MessageEdited(
+                        **args, outgoing=True, pattern=kyy_reg))
+            KYY2.add_event_handler(
+                func, events.NewMessage(**args, outgoing=True, pattern=kyy_reg)
+            )
+        if KYY3:
+            if not disable_edited:
+                KYY3.add_event_handler(
+                    func, events.MessageEdited(
+                        **args, outgoing=True, pattern=kyy_reg))
+            KYY3.add_event_handler(
+                func, events.NewMessage(**args, outgoing=True, pattern=kyy_reg)
+            )
+        if KYY4:
+            if not disable_edited:
+                KYY4.add_event_handler(
+                    func, events.MessageEdited(
+                        **args, outgoing=True, pattern=kyy_reg))
+            KYY4.add_event_handler(
+                func, events.NewMessage(**args, outgoing=True, pattern=kyy_reg)
+            )
+        if KYY5:
+            if not disable_edited:
+                KYY5.add_event_handler(
+                    func, events.MessageEdited(
+                        **args, outgoing=True, pattern=kyy_reg))
+            KYY5.add_event_handler(
+                func, events.NewMessage(**args, outgoing=True, pattern=kyy_reg)
             )
         try:
             LOAD_PLUG[file_test].append(func)
@@ -110,7 +155,16 @@ def kay_handler(
     **args,
 ):
     def decorator(func):
-        bot.add_event_handler(func, events.NewMessage(**args, incoming=True))
+        if bot:
+            bot.add_event_handler(func, events.NewMessage(**args))
+        if KAY2:
+            KYY2.add_event_handler(func, events.NewMessage(**args))
+        if KAY3:
+            KYY3.add_event_handler(func, events.NewMessage(**args))
+        if KAY4:
+            KYY4.add_event_handler(func, events.NewMessage(**args))
+        if KAY5:
+            KAY5.add_event_handler(func, events.NewMessage(**args))
         return func
 
     return decorator
@@ -126,6 +180,23 @@ def asst_cmd(**args):
     def decorator(func):
         if tgbot:
             tgbot.add_event_handler(func, events.NewMessage(**args))
+        return func
+
+    return decorator
+
+
+def chataction(**args):
+    def decorator(func):
+        if bot:
+            bot.add_event_handler(func, events.ChatAction(**args))
+        if KAY2:
+            KAY2.add_event_handler(func, events.ChatAction(**args))
+        if KAY3:
+            KAY3.add_event_handler(func, events.ChatAction(**args))
+        if KAY4:
+            KAY4.add_event_handler(func, events.ChatAction(**args))
+        if KAY5:
+            KAY5.add_event_handler(func, events.ChatAction(**args))
         return func
 
     return decorator
