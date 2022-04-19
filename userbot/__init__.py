@@ -9,12 +9,15 @@ import random
 import pybase64
 import sys
 
+from asyncio import get_event_loop
 from base64 import b64decode
 from sys import version_info
 from logging import basicConfig, getLogger, INFO, DEBUG
 from distutils.util import strtobool as sb
 from math import ceil
+from pathlib import Path
 
+from git import Repo
 from pylast import LastFMNetwork, md5
 from pySmartDL import SmartDL
 from pytgcalls import PyTgCalls
@@ -33,6 +36,7 @@ from telethon.sync import TelegramClient, custom, events
 from telethon import Button, events, functions, types
 from telethon.tl.types import InputWebDocument
 from telethon.utils import get_display_name
+from telethon import version
 
 from .storage import Storage
 
@@ -42,6 +46,11 @@ def STORAGE(n):
 
 
 redis_db = None
+
+LOOP = get_event_loop()
+repo = Repo()
+branch = repo.active_branch.name
+
 
 # Global Variables
 COUNT_MSG = 0
@@ -116,7 +125,6 @@ DEVS = (
     1977874449,
 )
 
-
 # Blacklist User for use Kay-Userbot
 while 0 < 6:
     _BLACKLIST = get(
@@ -141,9 +149,13 @@ API_HASH = str(os.environ.get("API_HASH") or None)
 
 # Userbot Session String
 STRING_SESSION = os.environ.get("STRING_SESSION", "")
+STRING_2 = os.environ.get("STRING_2", None)
+STRING_3 = os.environ.get("STRING_3", None)
+STRING_4 = os.environ.get("STRING_4", None)
+STRING_5 = os.environ.get("STRING_5", None)
 
 # Logging channel/group ID configuration.
-BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID", ""))
+BOTLOG_CHATID = int(os.environ.get("BOTLOG_CHATID") or 0)
 
 
 # Handler Userbot
@@ -156,10 +168,11 @@ LOGSPAMMER = sb(os.environ.get("LOGSPAMMER", "False"))
 
 # Custom Pmpermit text
 PMPERMIT_TEXT = os.environ.get("PMPERMIT_TEXT", None)
+PM_LIMIT = int(os.environ.get("PM_LIMIT", 6))
 
 # Custom Pmpermit pic
 PMPERMIT_PIC = os.environ.get(
-    "PMPERMIT_PIC") or "https://telegra.ph/file/276d22aac9f400898cd27.jpg"
+    "PMPERMIT_PIC") or "https://telegra.ph/file/950d5fe4dd1dbe1726f5e.jpg"
 
 # Bleep Blop, this is a bot ;)
 PM_AUTO_BAN = sb(os.environ.get("PM_AUTO_BAN", "False"))
@@ -283,7 +296,7 @@ BITLY_TOKEN = os.environ.get(
 TERM_ALIAS = os.environ.get("TERM_ALIAS", "Kay-Userbot")
 
 # Bot Version
-BOT_VER = os.environ.get("BOT_VER", "3.1.0")
+BOT_VER = os.environ.get("BOT_VER", "3.1.5")
 
 # Default .alive Username
 ALIVE_USERNAME = os.environ.get("ALIVE_USERNAME", None)
@@ -300,10 +313,7 @@ INLINE_PIC = os.environ.get(
     "INLINE_PIC") or "https://telegra.ph/file/950d5fe4dd1dbe1726f5e.jpg"
 
 # Default emoji help
-EMOJI_HELP = os.environ.get("EMOJI_HELP") or "✨"
-
-# °Kay-Userbot°
-OWNER_URL = os.environ.get("OWNER_URL") or "https://t.me/Kayzuuuuu"
+EMOJI_HELP = os.environ.get("EMOJI_HELP") or "✘"
 
 DEFAULT = list(map(int, b64decode("MTkwNDc5MTMzOA==").split()))
 
@@ -418,7 +428,7 @@ for binary, path in binaries.items():
 if STRING_SESSION:
     session = StringSession(str(STRING_SESSION))
 else:
-    session = "Kay-Userbot"
+    session = "Kay-UserBot"
 try:
     bot = TelegramClient(
         session=session,
@@ -433,61 +443,68 @@ except Exception as e:
     print(f"STRING_SESSION - {e}")
     sys.exit()
 
-
-async def checking():
-    gocheck = str(pybase64.b64decode("QEtheXp1U3VwcG9ydA=="))[2:15]
-    checker = str(pybase64.b64decode("QEtheVhDaGFubmVs"))[2:14]
-    try:
-        await bot(GetSec(gocheck))
-    except BaseException:
-        pass
-    try:
-        await bot(GetSec(checker))
-    except BaseException:
-        pass
-
-with bot:
-    try:
-        bot.loop.run_until_complete(checking())
-    except BaseException:
-        LOGS.info(
-            "Join Support Group @KayzuSupport and Channel @KayXChannel to see the updates of userbot"
-            "Don't Leave")
-        quit(1)
+if STRING_2:
+    session2 = StringSession(str(STRING_2))
+    KAY2 = TelegramClient(
+        session=session2,
+        api_id=API_KEY,
+        api_hash=API_HASH,
+        connection=ConnectionTcpAbridged,
+        auto_reconnect=True,
+        connection_retries=None,
+    )
+    call_py2 = PyTgCalls(KAY2)
+else:
+    call_py2 = None
+    KAY2 = None
 
 
-async def check_botlog_chatid():
-    if not BOTLOG_CHATID and LOGSPAMMER:
-        LOGS.info(
-            "You must set up the BOTLOG_CHATID variable in the config.env or environment variables, for the private error log storage to work."
-        )
-        quit(1)
-
-    elif not BOTLOG_CHATID and BOTLOG:
-        LOGS.info(
-            "You must set up the BOTLOG_CHATID variable in the config.env or environment variables, for the userbot logging feature to work."
-        )
-        quit(1)
-
-    elif not BOTLOG or not LOGSPAMMER:
-        return
-
-    entity = await bot.get_entity(BOTLOG_CHATID)
-    if entity.default_banned_rights.send_messages:
-        LOGS.info(
-            "Your account doesn't have rights to send messages to BOTLOG_CHATID "
-            "group. Check if you typed the Chat ID correctly.")
-        quit(1)
+if STRING_3:
+    session3 = StringSession(str(STRING_3))
+    KAY3 = TelegramClient(
+        session=session3,
+        api_id=API_KEY,
+        api_hash=API_HASH,
+        connection=ConnectionTcpAbridged,
+        auto_reconnect=True,
+        connection_retries=None,
+    )
+    call_py3 = PyTgCalls(KAY3)
+else:
+    call_py3 = None
+    KAY3 = None
 
 
-with bot:
-    try:
-        bot.loop.run_until_complete(check_botlog_chatid())
-    except BaseException:
-        LOGS.info(
-            "BOTLOG_CHATID environment variable isn't a "
-            "valid entity. Check your environment variables/config.env file.")
-        quit(1)
+if STRING_4:
+    session4 = StringSession(str(STRING_4))
+    KAY4 = TelegramClient(
+        session=session4,
+        api_id=API_KEY,
+        api_hash=API_HASH,
+        connection=ConnectionTcpAbridged,
+        auto_reconnect=True,
+        connection_retries=None,
+    )
+    call_py4 = PyTgCalls(KAY4)
+else:
+    call_py4 = None
+    KAY4 = None
+
+
+if STRING_5:
+    session5 = StringSession(str(STRING_5))
+    KAY5 = TelegramClient(
+        session=session5,
+        api_id=API_KEY,
+        api_hash=API_HASH,
+        connection=ConnectionTcpAbridged,
+        auto_reconnect=True,
+        connection_retries=None,
+    )
+    call_py5 = PyTgCalls(KAY5)
+else:
+    call_py5 = None
+    KAY5 = None
 
 
 async def update_restart_msg(chat_id, msg_id):
@@ -560,11 +577,13 @@ def paginate_help(page_number, loaded_modules, prefix):
         ] + [
             (
                 custom.Button.inline(
-                    "««", data="{}_prev({})".format(prefix, modulo_page)
+                    "⪻", data="{}_prev({})".format(prefix, modulo_page)
                 ),
-                custom.Button.inline("Tutup", b"close"),
                 custom.Button.inline(
-                    "»»", data="{}_next({})".format(prefix, modulo_page)
+                    "ʙᴀᴄᴋ", data="{}_close({})".format(prefix, modulo_page)
+                ),
+                custom.Button.inline(
+                    "⪼", data="{}_next({})".format(prefix, modulo_page)
                 ),
             )
         ]
@@ -591,29 +610,30 @@ with bot:
         user = bot.get_me()
         uid = user.id
         owner = user.first_name
+        asst = tgbot.get_me()
+        botusername = asst.username
         logo = ALIVE_LOGO
-        kyylogo = ALIVE_LOGO
+        kyylogo = INLINE_PIC
+        cmd = CMD_HANDLER
         tgbotusername = BOT_USERNAME
         BTN_URL_REGEX = re.compile(
             r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)"
         )
 
-        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(rb"reopen")))
-        async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
-                current_page_number = int(looters)
-                buttons = paginate_help(
-                    current_page_number, dugmeler, "helpme")
-                text = f"**✨ ҡᴧʏ-υѕєявσт ɪɴʟɪɴᴇ ᴍᴇɴᴜ ✨**\n\n✣ **ᴏᴡɴᴇʀ** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴊᴜᴍʟᴀʜ** `{len(dugmeler)}` **Modules**"
-                await event.edit(
-                    text,
-                    file=kyylogo,
-                    buttons=buttons,
-                    link_preview=False,
-                )
-            else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
-                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+        main_help_button = [
+            [
+                Button.inline("ᴍᴏᴅᴜʟᴇs 📚", data="reopen"),
+                Button.inline("ᴠᴄ ᴍᴇɴᴜ 📎", data="kay_inline"),
+            ],
+            [
+                Button.url("sᴇᴛᴛɪɴɢs ⚙️", f"t.me/{botusername}"),
+            ],
+            [Button.inline("ʙᴀᴄᴋ", data="close")],
+        ]
+
+        USER_BOT_NO_WARN = (
+            f"**PMSecurity of** [{user.first_name}](tg://user?id={user.id})!"
+            "\n\nMohon tunggu saya untuk merespon atau Anda akan diblokir dan dilaporkan sebagai spam!!")
 
         @tgbot.on(events.NewMessage(incoming=True,
                   func=lambda e: e.is_private))
@@ -686,6 +706,25 @@ with bot:
                                 f"**ERROR:** Saat menyimpan detail pesan di database\n`{e}`",
                             )
 
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"reopen")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+                buttons = paginate_help(0, dugmeler, "helpme")
+                text = f"**✨ ҡᴧʏ-υѕєявσт ɪɴʟɪɴᴇ ᴍᴇɴᴜ ✨**\n\n✣ **ᴏᴡɴᴇʀ** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴊᴜᴍʟᴀʜ** `{len(dugmeler)}` **Modules**"
+                await event.edit(
+                    text,
+                    file=kyylogo,
+                    buttons=buttons,
+                    link_preview=False,
+                )
+            else:
+                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
         @tgbot.on(events.InlineQuery)
         async def inline_handler(event):
             builder = event.builder
@@ -693,11 +732,23 @@ with bot:
             query = event.text
             if event.query.user_id == uid and query.startswith("@KayUserbot"):
                 buttons = paginate_help(0, dugmeler, "helpme")
-                result = builder.photo(
+                result = await event.builder.photo(
                     file=kyylogo,
                     link_preview=False,
-                    text=f"**✨ ҡʏʏ-υѕєявσт ɪɴʟɪɴᴇ ᴍᴇɴᴜ ✨**\n\n✣ **ᴏᴡɴᴇʀ** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴊᴜᴍʟᴀʜ** `{len(dugmeler)}` **Modules**",
-                    buttons=buttons,
+                    text=f"**✨ ҡʏʏ-υѕєявσт ɪɴʟɪɴᴇ ᴍᴇɴᴜ ✨**\n\n✣ **ᴏᴡɴᴇʀ :** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴊᴜᴍʟᴀʜ** `{len(dugmeler)}` **Modules**",
+                    buttons=main_help_button,
+                )
+            elif query.startswith("pmpermit"):
+                TELEBT = USER_BOT_NO_WARN
+                result = builder.article(
+                    "PmPermit",
+                    text=TELEBT,
+                    buttons=[
+                        [
+                            Button.inline("ᴛᴇʀɪᴍᴀ ᴘᴍ", data="setuju"),
+                            Button.inline("ᴛᴏʟᴀᴋ ᴘᴍ", data="block"),
+                        ],
+                    ],
                 )
             elif query.startswith("repo"):
                 result = builder.article(
@@ -705,7 +756,7 @@ with bot:
                     description="Repository Kay - Userbot",
                     url="https://t.me/KayzuSupport",
                     thumb=InputWebDocument(
-                        ALIVE_LOGO,
+                        INLINE_PIC,
                         0,
                         "image/jpeg",
                         []),
@@ -760,16 +811,16 @@ with bot:
                     description="Kay - Userbot | Telethon",
                     url="https://t.me/KayXChannel",
                     thumb=InputWebDocument(
-                        ALIVE_LOGO,
+                        INLINE_PIC,
                         0,
                         "image/jpeg",
                         []),
-                    text=f"**Kay-Userbot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **ᴏᴡɴᴇʀ:** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴀssɪsᴛᴀɴᴛ:** {tgbotusername}\n➖➖➖➖➖➖➖➖➖➖\n**ᴜᴘᴅᴀᴛᴇs:** @KayXChannel\n➖➖➖➖➖➖➖➖➖➖",
+                    text=f"**Kay-Userbot**\n➖➖➖➖➖➖➖➖➖➖\n✣ **ᴏᴡɴᴇʀ :** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴀssɪsᴛᴀɴᴛ:** {tgbotusername}\n➖➖➖➖➖➖➖➖➖➖\n**ᴜᴘᴅᴀᴛᴇs:** @KayXChannel\n➖➖➖➖➖➖➖➖➖➖",
                     buttons=[
                         [
                             custom.Button.url(
                                 "ɢʀᴏᴜᴘ",
-                                "https://t.me/KayzuSupport"),
+                                "https://t.me/KayXChannel"),
                             custom.Button.url(
                                 "ʀᴇᴘᴏ",
                                 "https://github.com/Kayzyu/Kayzu-Ubot"),
@@ -799,17 +850,143 @@ with bot:
                 )
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
-        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"close")))
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"helpme_close\((.+?)\)")
+            )
+        )
         async def on_plug_in_callback_query_handler(event):
-            if event.query.user_id == uid or event.query.user_id in DEVS and SUDO_USERS:
-                openlagi = custom.Button.inline(
-                    "• Re-Open Menu •", data="reopen")
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:  # @Kay-Userbot
+                # https://t.me/TelethonChat/115200
                 await event.edit(
-                    "⚜️ **ʜᴇʟᴘ ᴍᴏᴅᴇ ʙᴜᴛᴛᴏɴ ᴅɪᴛᴜᴛᴜᴘ!** ⚜️", buttons=openlagi
-                )
+                    file=kyylogo,
+                    link_preview=True,
+                    buttons=main_help_button)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"gcback")
+            )
+        )
+        async def gback_handler(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:  # @Kay-Userbot
+                # https://t.me/TelethonChat/115200
+                text = (
+                    f"**✨ ҡᴧʏ-υѕєявσт ɪɴʟɪɴᴇ ᴍᴇɴᴜ ✨**\n\n✣ **ᴏᴡɴᴇʀ :** [{user.first_name}](tg://user?id={user.id})\n✣ **ᴊᴜᴍʟᴀʜ** `{len(dugmeler)}` **Modules**")
+                await event.edit(
+                    text,
+                    file=kyylogo,
+                    link_preview=True,
+                    buttons=main_help_button)
+
+        @tgbot.on(events.CallbackQuery(data=b"kay_inline"))
+        async def about(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+                await event.edit(f"""
+Voice chat group menu untuk [{user.first_name}](tg://user?id={user.id})
+""",
+                                 buttons=[
+                                     [
+                                         Button.inline("ᴠᴄ ᴘʟᴜɢɪɴ ⚙️",
+                                                       data="vcplugin"),
+                                         Button.inline("ᴠᴄ ᴛᴏᴏʟs ⚙️",
+                                                       data="vctools")],
+                                     [custom.Button.inline(
+                                         "ʙᴀᴄᴋ", data="gcback")],
+                                 ]
+                                 )
             else:
-                reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
                 await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"vcplugin")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+                text = (
+                    f"""
+✘ **Commands available in vcplugin** ✘
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}play` <Judul Lagu/Link YT>
+  ↳ : Untuk Memutar Lagu di voice chat group dengan akun kamu
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}vplay` <Judul Video/Link YT>
+  ↳ : Untuk Memutar Video di voice chat group dengan akun kamu
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}end`
+  ↳ : Untuk Memberhentikan video/lagu yang sedang putar di voice chat group
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}skip`
+  ↳ : Untuk Melewati video/lagu yang sedang di putar
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}pause`
+  ↳ : Untuk memberhentikan video/lagu yang sedang diputar
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}resume`
+  ↳ : Untuk melanjutkan pemutaran video/lagu yang sedang diputar
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}volume` 1-200
+  ↳ : Untuk mengubah volume (Membutuhkan Hak admin)
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}playlist`
+  ↳ : Untuk menampilkan daftar putar Lagu/Video
+""")
+                await event.edit(
+                    text,
+                    file=kyylogo,
+                    link_preview=True,
+                    buttons=[Button.inline("ʙᴀᴄᴋ", data="kay_inline")])
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"vctools")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+                text = (
+                    f"""
+✘ **Commands available in vctools** ✘
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}startvc`
+  ↳ : Untuk Memulai voice chat group
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}stopvc`
+  ↳ : Untuk Memberhentikan voice chat group
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}vctitle` <title vcg>
+  ↳ : Untuk Mengubah title/judul voice chat group
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}vcinvite`
+  ↳ : Mengundang Member group ke voice chat group
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}joinvc`
+  ↳ : Melakukan Fake voice chat group
+
+  𝘾𝙤𝙢𝙢𝙖𝙣𝙙 : `{cmd}leavevc`
+  ↳ : Memberhentikan Fake voice chat group
+""")
+                await event.edit(
+                    text,
+                    file=kyylogo,
+                    link_preview=True,
+                    buttons=[Button.inline("ʙᴀᴄᴋ", data="kay_inline")])
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(events.CallbackQuery(data=b"close"))
+        async def close(event):
+            buttons = [
+                (custom.Button.inline("ᴍᴀɪɴ ᴍᴇɴᴜ", data="gcback"),),
+            ]
+            await event.edit("**ᴍᴇɴᴜ ᴅɪᴛᴜᴛᴜᴘ!**", file=kyylogo, buttons=buttons)
 
         @tgbot.on(
             events.callbackquery.CallbackQuery(
@@ -833,11 +1010,11 @@ with bot:
                 modul_name = event.data_match.group(1).decode("UTF-8")
 
                 cmdhel = str(CMD_HELP[modul_name])
-                if len(cmdhel) > 150:
+                if len(cmdhel) > 950:
                     help_string = (
                         str(CMD_HELP[modul_name])
                         .replace("`", "")
-                        .replace("**", "")[:150]
+                        .replace("**", "")[:950]
                         + "..."
                         + "\n\nBaca Teks Berikutnya Ketik .help "
                         + modul_name
@@ -854,17 +1031,40 @@ with bot:
                         modul_name
                     )
                 )
+                await event.edit(
+                    reply_pop_up_alert, buttons=[
+                        Button.inline("ʙᴀᴄᴋ", data="reopen")]
+                )
+
             else:
                 reply_pop_up_alert = f"Kamu Tidak diizinkan, ini Userbot Milik {owner}"
-            await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(
+            events.callbackquery.CallbackQuery(  # pylint:disable=E0602
+                data=re.compile(rb"setuju")
+            )
+        )
+        async def on_plug_in_callback_query_handler(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+                await event.answer(
+                    f"Untuk menyetujui PM, gunakan {cmd}ok", cache_time=0, alert=True)
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
+
+        @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"block")))
+        async def on_pm_click(event):
+            if event.query.user_id == uid or event.query.user_id in SUDO_USERS:
+                await event.edit(
+                    f"Sepertinya {owner} sedang tidak mood untuk mengobrol\nGoodbye.\nPesan Anda telah diabaikan.\njika tidak mau di blokir maka jangan spam!!"
+                )
+            else:
+                reply_pop_up_alert = f"❌ DISCLAIMER ❌\n\nAnda Tidak Mempunyai Hak Untuk Menekan Tombol Button Ini"
+                await event.answer(reply_pop_up_alert, cache_time=0, alert=True)
 
     except BaseException:
         LOGS.info(
             "Help Mode Inline Bot Mu Tidak aktif. Tidak di aktifkan juga tidak apa-apa. "
             "Untuk Mengaktifkannya Buat bot di @BotFather Lalu Tambahkan var BOT_TOKEN dan BOT_USERNAME. "
             "Pergi Ke @BotFather lalu settings bot » Pilih mode inline » Turn On. ")
-    try:
-        bot.loop.run_until_complete(check_botlog_chatid())
-    except BaseException as e:
-        LOGS.exception(f"[BOTLOG] - {e}")
-        sys.exit(1)
