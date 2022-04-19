@@ -38,13 +38,13 @@ async def kyy_clients(client):
 
 
 def multiclientkay():
-    if 1663258664 not in DEVS:
+    if 1904791338 not in DEVS:
         LOGS.warning(EOL.format(version))
         sys.exit(1)
-    if -1001380293847 not in GBL:
+    if -1001788983303 not in GBL:
         LOGS.warning(EOL.format(version))
         sys.exit(1)
-    if 1663258664 not in DEFAULT:
+    if 1904791338 not in DEFAULT:
         LOGS.warning(EOL.format(version))
         sys.exit(1)
     failed = 0
