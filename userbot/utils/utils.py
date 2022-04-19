@@ -279,7 +279,7 @@ async def autopilot():
     desc = "ᴍʏ ҡᴧʏ ʟᴏɢs ɢʀᴏᴜᴘ\n\n Join @KayXChannel"
     try:
         grup = await bot(
-            CreateChannelRequest(title="ҡʏʏ ʟᴏɢs", about=desc, megagroup=True)
+            CreateChannelRequest(title="ҡᴧʏ ʟᴏɢs", about=desc, megagroup=True)
         )
         grup_id = grup.chats[0].id
     except Exception as e:
