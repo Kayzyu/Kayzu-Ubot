@@ -60,5 +60,5 @@ async def client_id(event, botid=None):
         uid = telethon.utils.get_peer_id(client)
         OWNER_ID = uid
         client.first_name
-    kyy_rpk = f"[{KAY_CLIENT}](tg://user?id={OWNER_ID})"
+    kay_rpk = f"[{KAY_CLIENT}](tg://user?id={OWNER_ID})"
     return OWNER_ID, KAY_CLIENT, kay_rpk
