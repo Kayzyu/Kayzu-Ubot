@@ -62,7 +62,7 @@ def kay_cmd(
             re.compile(kay_ + pattern)
             sudo_reg = re.compile(sudo_ + pattern)
             if command is not None:
-                cmd1 = kyy_ + command
+                cmd1 = kay_ + command
                 cmd2 = sudo_ + command
             else:
                 cmd1 = (
@@ -158,9 +158,9 @@ def kay_handler(
         if bot:
             bot.add_event_handler(func, events.NewMessage(**args))
         if KAY2:
-            KYY2.add_event_handler(func, events.NewMessage(**args))
+            KAY2.add_event_handler(func, events.NewMessage(**args))
         if KAY3:
-            KYY3.add_event_handler(func, events.NewMessage(**args))
+            KAY3.add_event_handler(func, events.NewMessage(**args))
         if KAY4:
             KAY4.add_event_handler(func, events.NewMessage(**args))
         if KAY5:
