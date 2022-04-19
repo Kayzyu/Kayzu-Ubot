@@ -48,25 +48,25 @@ def kay_cmd(
         args["chats"] = black_list_chats
 
     if pattern is not None:
-        global kay_reg
+        global kyy_reg
         global sudo_reg
         if (
             pattern.startswith(r"\#")
             or not pattern.startswith(r"\#")
             and pattern.startswith(r"^")
         ):
-            kay_reg = sudo_reg = re.compile(pattern)
+            kyy_reg = sudo_reg = re.compile(pattern)
         else:
-            kay_ = "\\" + CMD_HANDLER
+            kyy_ = "\\" + CMD_HANDLER
             sudo_ = "\\" + SUDO_HANDLER
-            re.compile(kay_ + pattern)
+            kyy_reg = re.compile(kyy_ + pattern)
             sudo_reg = re.compile(sudo_ + pattern)
             if command is not None:
-                cmd1 = kay_ + command
+                cmd1 = kyy_ + command
                 cmd2 = sudo_ + command
             else:
                 cmd1 = (
-                    (kay_ +
+                    (kyy_ +
                      pattern).replace(
                         "$",
                         "").replace(
@@ -90,9 +90,9 @@ def kay_cmd(
             if not disable_edited:
                 bot.add_event_handler(
                     func, events.MessageEdited(
-                        **args, outgoing=True, pattern=kay_reg))
+                        **args, outgoing=True, pattern=kyy_reg))
             bot.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=kay_reg)
+                func, events.NewMessage(**args, outgoing=True, pattern=kyy_reg)
             )
         if bot:
             if allow_sudo:
@@ -114,33 +114,33 @@ def kay_cmd(
             if not disable_edited:
                 KAY2.add_event_handler(
                     func, events.MessageEdited(
-                        **args, outgoing=True, pattern=kay_reg))
+                        **args, outgoing=True, pattern=kyy_reg))
             KAY2.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=kay_reg)
+                func, events.NewMessage(**args, outgoing=True, pattern=kyy_reg)
             )
         if KAY3:
             if not disable_edited:
                 KAY3.add_event_handler(
                     func, events.MessageEdited(
-                        **args, outgoing=True, pattern=kay_reg))
+                        **args, outgoing=True, pattern=kyy_reg))
             KAY3.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=kay_reg)
+                func, events.NewMessage(**args, outgoing=True, pattern=kyy_reg)
             )
         if KAY4:
             if not disable_edited:
                 KAY4.add_event_handler(
                     func, events.MessageEdited(
-                        **args, outgoing=True, pattern=kay_reg))
+                        **args, outgoing=True, pattern=kyy_reg))
             KAY4.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=kay_reg)
+                func, events.NewMessage(**args, outgoing=True, pattern=kyy_reg)
             )
         if KAY5:
             if not disable_edited:
                 KAY5.add_event_handler(
                     func, events.MessageEdited(
-                        **args, outgoing=True, pattern=kay_reg))
+                        **args, outgoing=True, pattern=kyy_reg))
             KAY5.add_event_handler(
-                func, events.NewMessage(**args, outgoing=True, pattern=kay_reg)
+                func, events.NewMessage(**args, outgoing=True, pattern=kyy_reg)
             )
         try:
             LOAD_PLUG[file_test].append(func)
