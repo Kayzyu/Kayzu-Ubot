@@ -13,7 +13,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-from .start import startupmessage
+from .start import startupmessage, checking as kayscrt
 from . import format as _format
 from .format import parse_pre
 from .chrome import chrome, options
@@ -34,4 +34,11 @@ from .tools import (
     edit_or_reply,
     media_type,
 )
-from .utils import autobot, load_module, remove_plugin, start_assistant, create_supergroup
+from .utils import (
+    autobot,
+    load_module,
+    remove_plugin,
+    start_assistant,
+    autopilot,
+    git,
+)
