@@ -1,6 +1,5 @@
 import pybase64
 from telethon import Button
-from telethon.tl.functions.channels import JoinChannelRequest as Invt
 from userbot import BOTLOG, BOTLOG_CHATID, LOGS, tgbot
 
 
