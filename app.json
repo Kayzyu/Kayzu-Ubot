@@ -11,7 +11,7 @@
   ],
   "repository": "https://github.com/Kayzyu/Kayzu-Ubot/Kayzu-Ubot",
   "telegram": "https://t.me/Kayzuuuuu",
-  "success_url": "https://t.me/kayzuchannel",
+  "success_url": "https://t.me/KayXChannel",
   "stack": "container",
   "env": {
     "API_KEY": {
@@ -33,10 +33,6 @@
     "HEROKU_API_KEY": {
       "description": "Heroku API KEY mu, dapatkan dari web 'https://dashboard.heroku.com/account'",
       "value": "Check Di Heroku Dashboard Mu",
-      "required": true
-    },
-    "BOTLOG_CHATID": {
-      "description": "Buatlah Sebuah Grup Publik Lalu Masukkan Bot @MissRose_Bot Ke Grup Mu, Setelah itu Ketik /id. Nanti akan muncul ID seperti ini Contoh : -1001234567890",
       "required": true
     },
     "PM_AUTO_BAN": {
