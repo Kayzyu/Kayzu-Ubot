@@ -28,11 +28,11 @@ from userbot import (
 )
 from userbot.modules.gcast import GCAST_BLACKLIST as GBL
 
-EOL = "EOL\nKyy-UserBot v{}, Copyright © 2021-2022 KYY <https://github.com/muhammadrizky16/Kyy-Userbot>"
+EOL = "EOL\nKay-UserBot v{}, Copyright © 2021-2022 KAY <https://github.com/Kayzyu/Kayzu-Ubot>"
 MSG_BLACKLIST = "MAKANYA GA USAH BERTINGKAH GOBLOK, USERBOT {} GUA MATIIN NAJIS BANGET DIPAKE JAMET KEK LU."
 
 
-async def kyy_clients(client):
+async def kay_clients(client):
     client.me = await client.get_me()
     client.uid = get_peer_id(client.me)
 
@@ -68,7 +68,7 @@ def multiclientkay():
     if STRING_2:
         try:
             KAY2.start()
-            LOOP.run_until_complete(kyy_clients(KAY2))
+            LOOP.run_until_complete(kay_clients(KAY2))
             user = KAY2.get_me()
             name = user.first_name
             uid = user.id
@@ -83,7 +83,7 @@ def multiclientkay():
     if STRING_3:
         try:
             KAY3.start()
-            LOOP.run_until_complete(kyy_clients(KAY3))
+            LOOP.run_until_complete(kay_clients(KAY3))
             user = KAY3.get_me()
             name = user.first_name
             uid = user.id
@@ -98,7 +98,7 @@ def multiclientkay():
     if STRING_4:
         try:
             KAY4.start()
-            LOOP.run_until_complete(kyy_clients(KAY4))
+            LOOP.run_until_complete(kay_clients(KAY4))
             user = KAY4.get_me()
             name = user.first_name
             uid = user.id
@@ -113,7 +113,7 @@ def multiclientkay():
     if STRING_5:
         try:
             KAY5.start()
-            LOOP.run_until_complete(kyy_clients(KAY5))
+            LOOP.run_until_complete(kay_clients(KAY5))
             user = KAY5.get_me()
             name = user.first_name
             uid = user.id
