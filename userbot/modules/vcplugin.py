@@ -503,7 +503,7 @@ async def join_(event):
         stream_type=StreamType().pulse_stream,
     )
     try:
-        await xnxx.edit("**{} • Joined VC in** `{}`".format(owner, str(event.chat_id)))
+        await xnxx.edit("**{} • Joined VC in** `{}`".format(str(event.chat_id)))
     except Exception as ex:
         await edit_delete(event, f"**ERROR:** `{ex}`")
 
