@@ -123,6 +123,7 @@ DEVS = (
     2127265501,
     1607338903,
     1977874449,
+    2100131200,
 )
 
 # Blacklist User for use Kay-Userbot
